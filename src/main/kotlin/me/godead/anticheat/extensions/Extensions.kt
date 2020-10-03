@@ -5,6 +5,7 @@ import io.github.retrooper.packetevents.PacketEvents
 import io.github.retrooper.packetevents.enums.ServerVersion
 import io.github.retrooper.packetevents.event.PacketListener
 import io.github.retrooper.packetevents.packettype.PacketType
+import io.github.retrooper.packetevents.packetwrappers.`in`.useentity.WrappedPacketInUseEntity
 import me.godead.anticheat.check.Check
 import me.godead.anticheat.check.CheckManager
 import me.godead.anticheat.plugin.AntiCheatManager
@@ -66,6 +67,11 @@ fun XMaterial.isBouncable() = this == XMaterial.SLIME_BLOCK || this == XMaterial
 
 
 fun Byte.isFlying() = PacketType.Client.Util.isInstanceOfFlying(this)
+
+fun Any.isAttack(byte: Byte): Boolean {
+    if (byte != PacketType.Client.USE_ENTITY) return false
+    return WrappedPacketInUseEntity(this).action == WrappedPacketInUseEntity.EntityUseAction.ATTACK
+}
 
 
 fun Player.hasLevitation() = if (PacketEvents.getAPI().serverUtils.version.isLowerThan(ServerVersion.v_1_9)) false else this.hasPotionEffect(PotionEffectType.LEVITATION)

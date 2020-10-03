@@ -1,9 +1,14 @@
 package me.godead.anticheat.plugin
 
+import io.github.retrooper.packetevents.PacketEvents
+import io.github.retrooper.packetevents.event.PacketListener
+import me.godead.anticheat.check.Check
+import me.godead.anticheat.check.CheckManager
 import me.godead.anticheat.users.User
 import me.godead.lilliputian.Dependency
 import me.godead.lilliputian.Lilliputian
 import me.godead.lilliputian.Repository
+import org.bukkit.event.Listener
 import org.bukkit.plugin.Plugin
 import org.bukkit.plugin.java.JavaPlugin
 
@@ -52,4 +57,20 @@ open class AntiCheatPlugin : JavaPlugin() {
     val plugin: Plugin
         get() = AntiCheatManager.plugin
 
+    /**
+     * Registers a Bukkit Event for you
+     * */
+    fun registerEvent(vararg event: Listener) =
+        event.forEach { AntiCheatManager.plugin.server.pluginManager.registerEvents(it, AntiCheatManager.plugin) }
+
+    /**
+     * Registers a Packet Event for you
+     * */
+    fun registerEvent(vararg event: PacketListener) =
+        event.forEach { PacketEvents.getAPI().eventManager.registerListener(it) }
+
+    /**
+     * Registers a Check for you
+     * */
+    fun registerCheck(vararg check: Check) = check.forEach { CheckManager.checks.add(it.javaClass) }
 }

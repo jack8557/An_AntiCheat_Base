@@ -1,6 +1,6 @@
 # An Anticheat Base
 
-**An Anticheat Base** was made to reduce the amount of boilerplate when making an anticheat. With An Anticheat Base, anticheat creation will become *child's play*. AAB was built using **Kotlin**, so Kotlin users might benefit more from this, but it shouldn't be a problem for Java users. Powered by *PacketEvents* made by retrooper and designed with performance in mind, AAB should easily deliver great performance results.
+**An Anticheat Base** was made to reduce the amount of boilerplate when making an anticheat. With An Anticheat Base, anticheat creation will become *child's play*. AAB was built using **Kotlin**, so Kotlin users might benefit more from this, but it shouldn't be a problem for Java users. Powered by [*PacketEvents* by *retrooper*](https://github.com/retrooper/packetevents) and designed with performance in mind, AAB should easily deliver great performance results.
 
 
 # Usage

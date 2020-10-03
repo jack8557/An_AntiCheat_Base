@@ -4,6 +4,7 @@ import me.godead.anticheat.plugin.AntiCheatManager
 import me.godead.anticheat.ticks.Ticks
 import me.godead.anticheat.users.BoundingBox
 import me.godead.anticheat.users.User
+import me.godead.anticheat.utils.EvictingList
 import me.godead.anticheat.utils.XMaterial
 import org.bukkit.Bukkit
 import org.bukkit.Location
@@ -14,11 +15,18 @@ import kotlin.math.hypot
 
 class PositionManager(val user: User) {
 
-    var location: Location = user.player.location
-        private set
+    var locationHistory = EvictingList<Location>(50)
 
-    var lastLocation: Location = user.player.location
-        private set
+    val location get() = getLocation(0)
+
+    val lastLocation get() = getLocation(1)
+
+    fun getLocation(index: Int) =
+        try {
+            locationHistory.getReversed(index)
+        } catch (ex: Exception) {
+            user.player.location
+        }
 
     var onGround = false
         private set
@@ -29,6 +37,10 @@ class PositionManager(val user: User) {
     val deltaXZ get() = hypot((location.x - lastLocation.x), (location.z - lastLocation.z))
 
     val deltaY get() = location.y - lastLocation.x
+
+    val lastDeltaXZ get() = hypot((lastLocation.x - getLocation(2).x), (lastLocation.z - getLocation(2).z))
+
+    val lastDeltaY get() = lastLocation.y - getLocation(2).x
 
     val slimeTicks = Ticks(-99)
 
@@ -43,8 +55,7 @@ class PositionManager(val user: User) {
 
     fun handle(location: Location) {
         boundingBox = BoundingBox(location)
-        this.lastLocation = this.location
-        this.location = location
+        locationHistory.add(location)
         if (user.collisionManager.touchingAny(
                 XMaterial.SLIME_BLOCK,
                 XMaterial.HONEY_BLOCK

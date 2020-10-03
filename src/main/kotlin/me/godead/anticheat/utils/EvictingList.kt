@@ -10,7 +10,7 @@ class EvictingList<T> : LinkedList<T> {
         this.maxSize = maxSize
     }
 
-    constructor(c: Collection<T>?, maxSize: Int) : super(c) {
+    constructor(c: MutableCollection<out T>, maxSize: Int) : super(c) {
         this.maxSize = maxSize
     }
 
@@ -18,4 +18,9 @@ class EvictingList<T> : LinkedList<T> {
         if (size >= maxSize) removeFirst()
         return super.add(element)
     }
+
+    fun isFull() = size >= maxSize
+
+    fun getReversed(index: Int) = asReversed()[index]
+
 }

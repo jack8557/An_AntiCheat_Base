@@ -11,6 +11,7 @@ import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.entity.Boat
 import org.bukkit.entity.Minecart
+import java.util.function.Predicate
 import kotlin.math.hypot
 
 
@@ -64,7 +65,10 @@ class PositionManager(val user: User) {
             )
         ) slimeTicks.setTicks(System.currentTimeMillis())
 
-        if (user.collisionManager.touchingAny(XMaterial.AIR)) {
+        if (/*user.collisionManager.touchingAny(XMaterial.AIR)*/boundingBox.checkBlocks(
+                user.player.world
+            ) { block: XMaterial? -> block == XMaterial.AIR }
+        ) {
             "test1".debug()
 
             airTicks.setTicks(

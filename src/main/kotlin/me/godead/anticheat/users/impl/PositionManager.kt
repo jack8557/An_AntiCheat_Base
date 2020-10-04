@@ -1,6 +1,5 @@
 package me.godead.anticheat.users.impl
 
-import me.godead.anticheat.extensions.debug
 import me.godead.anticheat.plugin.AntiCheatManager
 import me.godead.anticheat.ticks.Ticks
 import me.godead.anticheat.users.BoundingBox
@@ -11,7 +10,6 @@ import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.entity.Boat
 import org.bukkit.entity.Minecart
-import java.util.function.Predicate
 import kotlin.math.hypot
 
 
@@ -61,29 +59,21 @@ class PositionManager(val user: User) {
         locationHistory.add(location)
         if (user.collisionManager.touchingAny(
                 XMaterial.SLIME_BLOCK,
-                /*XMaterial.HONEY_BLOCK*/
+                XMaterial.HONEY_BLOCK
             )
         ) slimeTicks.setTicks(System.currentTimeMillis())
 
-        if (/*user.collisionManager.touchingAny(XMaterial.AIR)*/boundingBox.checkBlocks(
-                user.player.world
-            ) { block: XMaterial? -> block == XMaterial.AIR }
-        ) {
-            "test1".debug()
+        if (user.collisionManager.touchingAny(XMaterial.AIR))
+            airTicks.setTicks(System.currentTimeMillis())
 
-            airTicks.setTicks(
-                System.currentTimeMillis()
-            )
-        } else {
-            "test2".debug()
-        }
         if (user.collisionManager.touchingAny(
                 XMaterial.LADDER,
-               /* XMaterial.VINE,
-                XMaterial.TWISTING_VINES_PLANT,
-                XMaterial.WEEPING_VINES_PLANT*/
+                 XMaterial.VINE,
+                 XMaterial.TWISTING_VINES_PLANT,
+                 XMaterial.WEEPING_VINES_PLANT
             )
         ) climbableTicks.setTicks(System.currentTimeMillis())
+
         Bukkit.getScheduler().runTask(
             AntiCheatManager.plugin,
             Runnable {

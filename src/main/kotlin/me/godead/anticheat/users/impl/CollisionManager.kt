@@ -7,7 +7,7 @@ import org.bukkit.Bukkit
 
 class CollisionManager(val user: User) {
 
-    private fun touchingAny(material: XMaterial): Boolean {
+    /*private */fun touchingAny(material: XMaterial): Boolean {
         var touching = false
         Bukkit.getScheduler().runTask(AntiCheatManager.plugin,
             Runnable {
@@ -18,7 +18,7 @@ class CollisionManager(val user: User) {
         return touching
     }
 
-    private fun touchingAll(material: XMaterial): Boolean {
+    /*private */fun touchingAll(material: XMaterial): Boolean {
         var touching = false
         Bukkit.getScheduler().runTask(AntiCheatManager.plugin,
             Runnable {
@@ -30,8 +30,8 @@ class CollisionManager(val user: User) {
     }
 
 
-    fun touchingAny(vararg materials: XMaterial) = materials.any { touchingAny(it) }
+    //fun touchingAny(vararg materials: XMaterial) = materials.any { touchingAny(it) }
 
-    fun touchingAll(vararg materials: XMaterial) = materials.any { touchingAll(it) }
+    //fun touchingAll(vararg materials: XMaterial) = materials.any { touchingAll(it) }
 
 }

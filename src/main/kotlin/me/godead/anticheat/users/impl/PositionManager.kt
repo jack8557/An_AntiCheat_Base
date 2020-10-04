@@ -1,5 +1,6 @@
 package me.godead.anticheat.users.impl
 
+import me.godead.anticheat.extensions.debug
 import me.godead.anticheat.plugin.AntiCheatManager
 import me.godead.anticheat.ticks.Ticks
 import me.godead.anticheat.users.BoundingBox
@@ -54,14 +55,16 @@ class PositionManager(val user: User) {
     fun onGround(isOnGround: Boolean) = run { onGround = isOnGround }
 
     fun handle(location: Location) {
-        boundingBox = BoundingBox(location)
+        boundingBox = BoundingBox(location.x, location.y, location.z)
+        boundingBox.expand(0.5, 0.07, 0.5).move(0.0, -0.55, 0.0)
         locationHistory.add(location)
         if (user.collisionManager.touchingAny(
                 XMaterial.SLIME_BLOCK,
                 XMaterial.HONEY_BLOCK
             )
         ) slimeTicks.setTicks(System.currentTimeMillis())
-        if (user.collisionManager.touchingAny(XMaterial.AIR)) airTicks.setTicks(
+
+        if (user.collisionManager.touchingAny(XMaterial.AIR)) "test".debug(); airTicks.setTicks(
             System.currentTimeMillis()
         )
         if (user.collisionManager.touchingAll(

@@ -6,6 +6,7 @@ import me.godead.anticheat.extensions.registerEvent
 import me.godead.anticheat.listeners.BukkitListener
 import me.godead.anticheat.listeners.PacketListener
 import me.godead.anticheat.ticks.TickProcessor
+import me.godead.anticheat.users.User
 import org.bukkit.plugin.Plugin
 
 
@@ -32,6 +33,9 @@ internal object AntiCheatManager {
     }
 
     var customUser: Class<*>? = null
+        get() = if (field == null) User::class.java else field
+
 
     var alertManager: AlertManager? = null
+        get() = if (field == null) AlertManager() else field
 }

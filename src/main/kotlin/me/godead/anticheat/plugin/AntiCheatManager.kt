@@ -1,6 +1,7 @@
 package me.godead.anticheat.plugin
 
 import io.github.retrooper.packetevents.PacketEvents
+import me.godead.anticheat.alert.AlertManager
 import me.godead.anticheat.extensions.registerEvent
 import me.godead.anticheat.listeners.BukkitListener
 import me.godead.anticheat.listeners.PacketListener
@@ -31,4 +32,6 @@ internal object AntiCheatManager {
     }
 
     var customUser: Class<*>? = null
+
+    var alertManager: AlertManager? = null
 }

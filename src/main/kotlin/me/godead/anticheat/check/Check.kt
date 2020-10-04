@@ -2,12 +2,14 @@ package me.godead.anticheat.check
 
 import io.github.retrooper.packetevents.event.impl.PacketReceiveEvent
 import io.github.retrooper.packetevents.event.impl.PacketSendEvent
+import me.godead.anticheat.alert.AlertManager
+import me.godead.anticheat.plugin.AntiCheatManager
 import me.godead.anticheat.users.User
 
 open class Check {
 
     var vl = 0
-    var maxVL = 0
+    var maxVL = 15
     var enabled = false
     var punishable = false
 
@@ -25,6 +27,11 @@ open class Check {
 
     protected fun flag(user: User) {
         vl++
+        if (AntiCheatManager.alertManager != null) {
+            AntiCheatManager.alertManager!!.onFlag(user, this)
+        } else {
+            AlertManager().onFlag(user, this)
+        }
     }
 
     init {

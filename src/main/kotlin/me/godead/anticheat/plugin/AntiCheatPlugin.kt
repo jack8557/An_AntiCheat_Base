@@ -2,6 +2,8 @@ package me.godead.anticheat.plugin
 
 import io.github.retrooper.packetevents.PacketEvents
 import io.github.retrooper.packetevents.event.PacketListener
+import javafx.scene.control.Alert
+import me.godead.anticheat.alert.AlertManager
 import me.godead.anticheat.check.Check
 import me.godead.anticheat.check.CheckManager
 import me.godead.anticheat.users.User
@@ -52,6 +54,10 @@ open class AntiCheatPlugin : JavaPlugin() {
 
     fun setUser(user: Class<*>) {
         AntiCheatManager.customUser = user
+    }
+
+    fun setAlertManager(alertManager: AlertManager) {
+        AntiCheatManager.alertManager = alertManager
     }
 
     val plugin: Plugin

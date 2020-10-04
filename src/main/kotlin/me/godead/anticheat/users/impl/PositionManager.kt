@@ -75,7 +75,7 @@ class PositionManager(val user: User) {
             AntiCheatManager.plugin,
             Runnable {
                 isNearBoat = user.player.getNearbyEntities(4.0, 4.0, 4.0).stream()
-                    .anyMatch { entity: Any? -> entity is Minecart || entity is Boat }
+                    .anyMatch { entity: Any -> entity is Minecart || entity is Boat }
             })
     }
 

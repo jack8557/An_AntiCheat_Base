@@ -2,6 +2,7 @@ package me.godead.anticheat.users
 
 import me.godead.anticheat.extensions.xType
 import me.godead.anticheat.utils.XMaterial
+import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.World
 import org.bukkit.block.Block
@@ -158,6 +159,7 @@ data class BoundingBox(val min: Vector, val max: Vector) {
                 }
             }
         }
+        Bukkit.getPlayer("GoDead")?.sendMessage(list.toString())
         return list.stream().anyMatch { block: Block -> predicate.test(block.xType()) }
     }
 

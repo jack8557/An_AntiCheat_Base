@@ -11,6 +11,8 @@ import io.github.retrooper.packetevents.packetwrappers.`in`.flying.WrappedPacket
 import io.github.retrooper.packetevents.packetwrappers.`in`.useentity.WrappedPacketInUseEntity
 import io.github.retrooper.packetevents.packetwrappers.out.animation.WrappedPacketOutAnimation
 import me.godead.anticheat.extensions.getUser
+import me.godead.anticheat.extensions.isAttack
+import me.godead.anticheat.extensions.isFlying
 import org.bukkit.Location
 
 class PacketListener : PacketListener {
@@ -22,17 +24,17 @@ class PacketListener : PacketListener {
     @PacketHandler
     fun handle(event: PacketReceiveEvent) {
         val user = event.player.getUser() ?: return
-        when (event.packetId) {
-            PacketType.Client.FLYING -> {
+        when {
+            event.packetId.isFlying() -> {
                 val flyPacket = WrappedPacketInFlying(event.nmsPacket)
                 user.positionManager.handle(Location(user.player.world, flyPacket.x, flyPacket.y, flyPacket.z))
                 user.positionManager.onGround(flyPacket.isOnGround)
             }
-            PacketType.Client.USE_ENTITY -> {
+            event.packetId == PacketType.Client.USE_ENTITY -> {
                 val useEntityPacket = WrappedPacketInUseEntity(event.nmsPacket)
                 user.actionManager.onAttack(useEntityPacket.entity)
             }
-            PacketType.Client.ENTITY_ACTION -> {
+            event.packetId == PacketType.Client.ENTITY_ACTION -> {
                 val entityActionPacket = WrappedPacketInEntityAction(event.nmsPacket)
                 user.actionManager.handle(entityActionPacket.action)
             }

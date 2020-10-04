@@ -159,7 +159,6 @@ data class BoundingBox(val min: Vector, val max: Vector) {
                 }
             }
         }
-        Bukkit.getPlayer("GoDead")?.sendMessage(list.toString())
         return list.stream().anyMatch { block: Block -> predicate.test(block.xType()) }
     }
 

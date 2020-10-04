@@ -64,10 +64,10 @@ class PositionManager(val user: User) {
             )
         ) slimeTicks.setTicks(System.currentTimeMillis())
 
-        if (user.collisionManager.touchingAny(XMaterial.AIR)) "test".debug(); airTicks.setTicks(
+        if (user.collisionManager.touchingAll(XMaterial.AIR)) "test".debug(); airTicks.setTicks(
             System.currentTimeMillis()
         )
-        if (user.collisionManager.touchingAll(
+        if (user.collisionManager.touchingAny(
                 XMaterial.LADDER,
                 XMaterial.VINE,
                 XMaterial.TWISTING_VINES_PLANT,

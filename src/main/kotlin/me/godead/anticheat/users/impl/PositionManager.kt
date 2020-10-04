@@ -61,7 +61,7 @@ class PositionManager(val user: User) {
                 XMaterial.HONEY_BLOCK
             )
         ) slimeTicks.setTicks(System.currentTimeMillis())
-        if (user.collisionManager.touchingAll(XMaterial.AIR, XMaterial.CAVE_AIR, XMaterial.VOID_AIR)) airTicks.setTicks(
+        if (user.collisionManager.touchingAny(XMaterial.AIR)) airTicks.setTicks(
             System.currentTimeMillis()
         )
         if (user.collisionManager.touchingAll(

@@ -13,6 +13,7 @@ import me.godead.anticheat.users.User
 import me.godead.anticheat.users.UserManager
 import me.godead.anticheat.utils.ReflectionsUtil
 import me.godead.anticheat.utils.XMaterial
+import org.bukkit.Bukkit
 import org.bukkit.ChatColor
 import org.bukkit.block.Block
 import org.bukkit.entity.Entity
@@ -45,6 +46,8 @@ fun registerEvent(vararg event: PacketListener) =
  * Registers a Check for you
  * */
 fun registerCheck(vararg check: Check) = check.forEach { CheckManager.checks.add(it.javaClass) }
+
+fun Any.debug() = Bukkit.broadcastMessage(toString().color())
 
 fun Block.xType(): XMaterial {
     val valueBefore: String = this.toString().substringAfter("type=")

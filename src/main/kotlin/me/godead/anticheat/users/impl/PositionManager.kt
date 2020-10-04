@@ -59,7 +59,7 @@ class PositionManager(val user: User) {
         locationHistory.add(location)
         if (user.collisionManager.touchingAny(
                 XMaterial.SLIME_BLOCK,
-                XMaterial.HONEY_BLOCK
+                /*XMaterial.HONEY_BLOCK*/
             )
         ) slimeTicks.setTicks(System.currentTimeMillis())
 
@@ -68,9 +68,9 @@ class PositionManager(val user: User) {
 
         if (user.collisionManager.touchingAny(
                 XMaterial.LADDER,
-                 XMaterial.VINE,
+                 /*XMaterial.VINE,
                  XMaterial.TWISTING_VINES_PLANT,
-                 XMaterial.WEEPING_VINES_PLANT
+                 XMaterial.WEEPING_VINES_PLANT*/
             )
         ) climbableTicks.setTicks(System.currentTimeMillis())
 

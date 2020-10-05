@@ -1,5 +1,6 @@
 package me.godead.anticheat.users.impl
 
+import me.godead.anticheat.extensions.debug
 import me.godead.anticheat.plugin.AntiCheatManager
 import me.godead.anticheat.ticks.Ticks
 import me.godead.anticheat.users.BoundingBox
@@ -10,6 +11,7 @@ import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.entity.Boat
 import org.bukkit.entity.Minecart
+import java.util.function.Predicate
 import kotlin.math.hypot
 
 
@@ -54,7 +56,7 @@ class PositionManager(val user: User) {
     fun onGround(isOnGround: Boolean) = run { onGround = isOnGround }
 
     fun handle(location: Location) {
-        boundingBox = BoundingBox(location.x, location.y, location.z)
+        boundingBox = BoundingBox(user.player.location.x, user.player.location.y, user.player.location.z)
         boundingBox.expand(0.5, 0.07, 0.5).move(0.0, -0.55, 0.0)
         locationHistory.add(location)
         if (user.collisionManager.touchingAny(
@@ -66,11 +68,12 @@ class PositionManager(val user: User) {
         if (!user.collisionManager.touchingAll(XMaterial.AIR))
             airTicks.setTicks(System.currentTimeMillis())
 
+
         if (user.collisionManager.touchingAny(
                 XMaterial.LADDER,
-                 XMaterial.VINE,
-                 XMaterial.TWISTING_VINES_PLANT,
-                 XMaterial.WEEPING_VINES_PLANT
+                XMaterial.VINE,
+                XMaterial.TWISTING_VINES_PLANT,
+                XMaterial.WEEPING_VINES_PLANT
             )
         ) climbableTicks.setTicks(System.currentTimeMillis())
 

@@ -1,6 +1,5 @@
 package me.godead.anticheat.users.impl
 
-import me.godead.anticheat.extensions.debug
 import me.godead.anticheat.plugin.AntiCheatManager
 import me.godead.anticheat.ticks.Ticks
 import me.godead.anticheat.users.BoundingBox
@@ -11,17 +10,23 @@ import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.entity.Boat
 import org.bukkit.entity.Minecart
-import java.util.function.Predicate
 import kotlin.math.hypot
 
 
 class PositionManager(val user: User) {
 
-    var locationHistory = EvictingList<Location>(50)
+    val locationHistory = EvictingList<Location>(50)
 
-    val location get() = locationHistory[0]
+    val location get() = getLocation(0)
 
-    val lastLocation get() = locationHistory[1]
+    val lastLocation get() = getLocation(1)
+
+    fun getLocation(index: Int) =
+        try {
+            locationHistory.getReversed(index)
+        } catch (ex: Exception) {
+            user.player.location
+        }
 
     var onGround = false
         private set
@@ -31,11 +36,11 @@ class PositionManager(val user: User) {
 
     val deltaXZ get() = hypot((location.x - lastLocation.x), (location.z - lastLocation.z))
 
-    val deltaY get() = location.y - lastLocation.x
+    val deltaY get() = location.y - lastLocation.y
 
-    val lastDeltaXZ get() = hypot((lastLocation.x - locationHistory[2].x), (lastLocation.z - locationHistory[2].z))
+    val lastDeltaXZ get() = hypot((lastLocation.x - getLocation(2).x), (lastLocation.z - getLocation(2).z))
 
-    val lastDeltaY get() = lastLocation.y - locationHistory[2].x
+    val lastDeltaY get() = lastLocation.y - getLocation(2).x
 
     val slimeTicks = Ticks(-99)
 
@@ -51,7 +56,7 @@ class PositionManager(val user: User) {
     fun handle(location: Location) {
         boundingBox = BoundingBox(user.player.location)
         boundingBox.expand(0.5, 0.07, 0.5).move(0.0, -0.55, 0.0)
-        locationHistory.addFirst(user.player.location)
+        locationHistory.add(user.player.location)
         if (user.collisionManager.touchingAny(
                 XMaterial.SLIME_BLOCK,
                 XMaterial.HONEY_BLOCK

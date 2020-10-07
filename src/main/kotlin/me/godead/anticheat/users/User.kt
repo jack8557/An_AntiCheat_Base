@@ -20,7 +20,7 @@ open class User(uuid: UUID) {
 
     val player: Player = Bukkit.getPlayer(uuid)!!
 
-    private val checks: List<Check> = CheckManager.loadChecks()
+    val checks: List<Check> = CheckManager.loadChecks()
 
     var alerts: Boolean = true
 

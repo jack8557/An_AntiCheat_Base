@@ -53,4 +53,24 @@ class CollisionManager(val user: User) {
         )
     }
 
+    fun isNear(material: String): Boolean {
+        val location = user.player.location
+        val expand = 0.3
+        var x = -expand
+        while (x <= expand) {
+            var z = -expand
+            while (z <= expand) {
+                if (location.clone().add(x, 0.1, z).block.toString().toLowerCase()
+                        .contains(material.toLowerCase()) || location.clone().add(x, -0.5001, z).block.toString()
+                        .toLowerCase().contains(material.toLowerCase())
+                ) {
+                    return true
+                }
+                z += expand
+            }
+            x += expand
+        }
+        return false
+    }
+
 }

@@ -19,6 +19,11 @@ class EvictingList<T> : LinkedList<T> {
         return super.add(element)
     }
 
+    override fun addFirst(element: T) {
+        if (size >= maxSize) removeLast()
+        return super.addFirst(element)
+    }
+
     fun isFull() = size >= maxSize
 
     fun getReversed(index: Int) = asReversed()[index]

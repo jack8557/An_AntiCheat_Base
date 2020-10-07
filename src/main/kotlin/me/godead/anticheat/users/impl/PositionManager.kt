@@ -19,16 +19,9 @@ class PositionManager(val user: User) {
 
     var locationHistory = EvictingList<Location>(50)
 
-    val location get() = getLocation(0)
+    val location get() = locationHistory[0]
 
-    val lastLocation get() = getLocation(1)
-
-    fun getLocation(index: Int) =
-        try {
-            locationHistory.getReversed(index)
-        } catch (ex: Exception) {
-            user.player.location
-        }
+    val lastLocation get() = locationHistory[1]
 
     var onGround = false
         private set
@@ -40,9 +33,9 @@ class PositionManager(val user: User) {
 
     val deltaY get() = location.y - lastLocation.x
 
-    val lastDeltaXZ get() = hypot((lastLocation.x - getLocation(2).x), (lastLocation.z - getLocation(2).z))
+    val lastDeltaXZ get() = hypot((lastLocation.x - locationHistory[2].x), (lastLocation.z - locationHistory[2].z))
 
-    val lastDeltaY get() = lastLocation.y - getLocation(2).x
+    val lastDeltaY get() = lastLocation.y - locationHistory[2].x
 
     val slimeTicks = Ticks(-99)
 
@@ -56,9 +49,9 @@ class PositionManager(val user: User) {
     fun onGround(isOnGround: Boolean) = run { onGround = isOnGround }
 
     fun handle(location: Location) {
-        boundingBox = BoundingBox(user.player.location.x, user.player.location.y, user.player.location.z)
+        boundingBox = BoundingBox(user.player.location)
         boundingBox.expand(0.5, 0.07, 0.5).move(0.0, -0.55, 0.0)
-        locationHistory.add(location)
+        locationHistory.addFirst(user.player.location)
         if (user.collisionManager.touchingAny(
                 XMaterial.SLIME_BLOCK,
                 XMaterial.HONEY_BLOCK

@@ -40,9 +40,7 @@ class CollisionManager(val user: User) {
     fun touchingAny(height: Double, vararg materials: XMaterial) = materials.any {
         touchingAny(
             BoundingBox(
-                user.player.location.x,
-                height,
-                user.player.location.z
+                user.player.location.clone().add(0.0, height, 0.0)
             ), it
         )
     }
@@ -50,9 +48,7 @@ class CollisionManager(val user: User) {
     fun touchingAll(height: Double, vararg materials: XMaterial) = materials.any {
         touchingAll(
             BoundingBox(
-                user.player.location.x,
-                height,
-                user.player.location.z
+                user.player.location.clone().add(0.0, height, 0.0)
             ), it
         )
     }

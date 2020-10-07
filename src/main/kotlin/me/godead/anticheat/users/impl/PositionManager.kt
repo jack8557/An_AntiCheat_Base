@@ -56,7 +56,7 @@ class PositionManager(val user: User) {
     fun handle(location: Location) {
         boundingBox = BoundingBox(user.player.location)
         boundingBox.expand(0.5, 0.07, 0.5).move(0.0, -0.55, 0.0)
-        locationHistory.add(user.player.location)
+        locationHistory.add(location)
         if (user.collisionManager.touchingAny(
                 XMaterial.SLIME_BLOCK,
                 XMaterial.HONEY_BLOCK

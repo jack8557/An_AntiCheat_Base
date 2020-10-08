@@ -2,6 +2,7 @@ package me.godead.anticheat.check
 
 import io.github.retrooper.packetevents.event.impl.PacketReceiveEvent
 import io.github.retrooper.packetevents.event.impl.PacketSendEvent
+import me.godead.anticheat.config.CheckConfig
 import me.godead.anticheat.plugin.AntiCheatManager
 import me.godead.anticheat.users.User
 
@@ -9,6 +10,7 @@ open class Check {
 
     var vl = 0
     var maxVL = 15
+
     var enabled = false
     var punishable = false
 
@@ -25,13 +27,14 @@ open class Check {
     open fun onPacketSend(event: PacketSendEvent, user: User) {}
 
     protected fun flag(user: User) {
+        if (!enabled) return
         vl++
         AntiCheatManager.alertManager!!.onFlag(user, this)
     }
 
     init {
-        //enabled = CheckConfig.getCheckConfig().setIfAbsent("$checkConfigName.enabled", true)
-        //punishable = CheckConfig.getCheckConfig().setIfAbsent("$checkConfigName.punishable", true)
-        //maxVL = CheckConfig.getCheckConfig().setIfAbsent("$checkConfigName.max-vl", 15)
+        enabled = AntiCheatManager.defaultCheckConfig.getOrSet("$checkConfigName.enabled", true) as Boolean
+        punishable = AntiCheatManager.defaultCheckConfig.getOrSet("$checkConfigName.punishable", true) as Boolean
+        maxVL = AntiCheatManager.defaultCheckConfig.getOrSet("$checkConfigName.max-vl", 15) as Int
     }
 }

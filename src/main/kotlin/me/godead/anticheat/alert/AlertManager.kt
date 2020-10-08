@@ -18,6 +18,7 @@ open class AlertManager {
     }
 
     open fun onPunish(user: User, check: Check) {
+        if (!check.punishable) return
         Bukkit.getScheduler().runTask(AntiCheatManager.plugin, Runnable { user.player.kickPlayer("&7You have been kicked for &c${check.checkName}".color()) })
     }
 

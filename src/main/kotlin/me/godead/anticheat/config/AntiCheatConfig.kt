@@ -21,11 +21,14 @@ open class AntiCheatConfig(val configName: String) {
 
     fun save() = customConfig.save(customConfigFile)
 
+    
+    
     fun createConfig(): AntiCheatConfig {
         customConfigFile = File(AntiCheatManager.plugin.dataFolder, "$configName.yml")
         if (!customConfigFile.exists()) {
             customConfigFile.parentFile.mkdirs()
-            AntiCheatManager.plugin.saveResource("$configName.yml", false)
+            customConfigFile.createNewFile()
+            //AntiCheatManager.plugin.saveResource("$configName.yml", false)
         }
         customConfig = YamlConfiguration()
         try {

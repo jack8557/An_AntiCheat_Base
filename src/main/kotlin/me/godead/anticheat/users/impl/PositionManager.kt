@@ -1,5 +1,6 @@
 package me.godead.anticheat.users.impl
 
+import me.godead.anticheat.extensions.isGliding
 import me.godead.anticheat.plugin.AntiCheatManager
 import me.godead.anticheat.ticks.Ticks
 import me.godead.anticheat.users.BoundingBox
@@ -48,6 +49,8 @@ class PositionManager(val user: User) {
 
     val climbableTicks = Ticks(-99)
 
+    val elytraTicks = Ticks(-99)
+
     var isNearBoat = false
         private set
 
@@ -74,6 +77,8 @@ class PositionManager(val user: User) {
                 XMaterial.WEEPING_VINES_PLANT
             )
         ) climbableTicks.setTicks(System.currentTimeMillis())
+
+        if (user.isGliding()) elytraTicks.setTicks(System.currentTimeMillis())
 
         Bukkit.getScheduler().runTask(
             AntiCheatManager.plugin,

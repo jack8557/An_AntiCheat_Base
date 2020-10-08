@@ -76,6 +76,7 @@ fun Any.isAttack(byte: Byte): Boolean {
     return WrappedPacketInUseEntity(this).action == WrappedPacketInUseEntity.EntityUseAction.ATTACK
 }
 
+fun User.isGliding() = if (PacketEvents.getAPI().serverUtils.version.isHigherThan(ServerVersion.v_1_8_8)) this.player.isGliding else false
 
 fun Player.hasLevitation() = if (PacketEvents.getAPI().serverUtils.version.isLowerThan(ServerVersion.v_1_9)) false else this.hasPotionEffect(PotionEffectType.LEVITATION)
 

@@ -43,6 +43,14 @@ class PositionManager(val user: User) {
 
     val lastDeltaY get() = lastLocation.y - getLocation(2).x
 
+    val deltaPitch get() = location.pitch - lastLocation.pitch
+
+    val deltaYaw get() = location.yaw - lastLocation.yaw
+
+    val lastDeltaPitch get() = lastLocation.pitch - getLocation(2).pitch
+
+    val lastDeltaYaw get() = lastLocation.yaw - getLocation(2).yaw
+
     val slimeTicks = Ticks(-99)
 
     val airTicks = Ticks(-99)

@@ -6,12 +6,18 @@ import me.godead.anticheat.utils.XMaterial
 
 class CollisionManager(val user: User) {
 
-    private fun touchingAny(material: XMaterial) = user.positionManager.boundingBox.checkBlocksAny(
+    val isAgainstWall get() = (user.collisionManager.touchingAll(BoundingBox(
+        user.player.location.clone().add(0.0, 0.5, 0.0)
+    ).expand(0.5, 0.0, 0.5), XMaterial.AIR) || user.collisionManager.touchingAll(BoundingBox(
+        user.player.location.clone().add(0.0, 1.5, 0.0)
+    ).expand(0.5, 0.0, 0.5), XMaterial.AIR))
+
+    fun touchingAny(material: XMaterial) = user.positionManager.boundingBox.checkBlocksAny(
         user.player.world
     ) { XMaterial: XMaterial -> XMaterial == material }
 
 
-    private fun touchingAll(material: XMaterial) = user.positionManager.boundingBox.checkBlocks(
+    fun touchingAll(material: XMaterial) = user.positionManager.boundingBox.checkBlocks(
         user.player.world
     ) { XMaterial: XMaterial -> XMaterial == material }
 
@@ -21,12 +27,12 @@ class CollisionManager(val user: User) {
     fun touchingAll(vararg materials: XMaterial) = materials.any { touchingAll(it) }
 
 
-    private fun touchingAny(boundingBox: BoundingBox, material: XMaterial) = boundingBox.checkBlocksAny(
+    fun touchingAny(boundingBox: BoundingBox, material: XMaterial) = boundingBox.checkBlocksAny(
         user.player.world
     ) { XMaterial: XMaterial -> XMaterial == material }
 
 
-    private fun touchingAll(boundingBox: BoundingBox, material: XMaterial) = boundingBox.checkBlocks(
+    fun touchingAll(boundingBox: BoundingBox, material: XMaterial) = boundingBox.checkBlocks(
         user.player.world
     ) { XMaterial: XMaterial -> XMaterial == material }
 

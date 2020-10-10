@@ -120,13 +120,13 @@ public class ReflectionsUtil {
         return getMethodValue(getMethod(getCBClass("inventory.CraftInventoryPlayer"), "getInventory"), player.getInventory());
     }
 
-    private static Field frictionFactorField = getFieldByName(vanillaBlock, "frictionFactor");
+    /*private static Field frictionFactorField = getFieldByName(vanillaBlock, "frictionFactor");
 
     public static float getFriction(Block block) {
         Object blockNMS = getVanillaBlock(block);
 
         return (float) getFieldValue(frictionFactorField, blockNMS);
-    }
+    }*/
 
     public static Object getBlockPosition(Location location) {
         if (ProtocolVersion.getGameVersion().isOrAbove(ProtocolVersion.V1_8)) {

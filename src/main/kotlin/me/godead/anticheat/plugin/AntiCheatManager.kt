@@ -3,6 +3,7 @@ package me.godead.anticheat.plugin
 import io.github.retrooper.packetevents.PacketEvents
 import me.godead.anticheat.alert.AlertManager
 import me.godead.anticheat.config.CheckConfig
+import me.godead.anticheat.config.DefaultConfig
 import me.godead.anticheat.extensions.registerEvent
 import me.godead.anticheat.listeners.BukkitListener
 import me.godead.anticheat.listeners.PacketListener
@@ -19,16 +20,23 @@ internal object AntiCheatManager {
 
     lateinit var defaultCheckConfig: CheckConfig
 
+    lateinit var defaultConfig: DefaultConfig
+
     fun init(plugin: Plugin) {
         this.plugin = plugin
         PacketEvents.load()
         PacketEvents.getSettings().identifier = plugin.javaClass.name
         PacketEvents.init(plugin)
+
         defaultCheckConfig = CheckConfig()
         defaultCheckConfig.createConfig()
+        defaultConfig = DefaultConfig()
+        defaultConfig.createConfig()
+
         registerEvent(BukkitListener())
-        tickProcessor.start()
         registerEvent(PacketListener())
+
+        tickProcessor.start()
     }
 
     fun stop(plugin: Plugin) {

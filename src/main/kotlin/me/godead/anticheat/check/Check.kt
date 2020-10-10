@@ -9,7 +9,7 @@ import me.godead.anticheat.users.User
 open class Check {
 
     var vl = 0
-    var maxVL = 15
+    var maxVL = 10
 
     var enabled = false
     var punishable = false
@@ -35,6 +35,6 @@ open class Check {
     init {
         enabled = AntiCheatManager.defaultCheckConfig.getOrSet("$checkConfigName.enabled", true) as Boolean
         punishable = AntiCheatManager.defaultCheckConfig.getOrSet("$checkConfigName.punishable", true) as Boolean
-        maxVL = AntiCheatManager.defaultCheckConfig.getOrSet("$checkConfigName.max-vl", 15) as Int
+        maxVL = AntiCheatManager.defaultCheckConfig.getOrSet("$checkConfigName.max-vl", 10) as Int
     }
 }

@@ -54,6 +54,7 @@ fun Block.xType(): XMaterial {
     val valueBefore: String = this.toString().substringAfter("type=")
     val valuePre: String = valueBefore.substringBefore(",data")
     val value: String = valuePre.toUpperCase().replace(' ','_')
+
     return try {
         XMaterial.valueOf(value)
     } catch (ex: java.lang.IllegalArgumentException) {

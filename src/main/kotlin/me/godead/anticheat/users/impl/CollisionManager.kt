@@ -1,6 +1,5 @@
 package me.godead.anticheat.users.impl
 
-import me.godead.anticheat.extensions.isSolid
 import me.godead.anticheat.users.BoundingBox
 import me.godead.anticheat.users.User
 import me.godead.anticheat.utils.XMaterial

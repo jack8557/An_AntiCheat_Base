@@ -5,7 +5,6 @@ package me.godead.anticheat.extensions
 import me.godead.anticheat.utils.XMaterial
 import org.bukkit.block.Block
 
-
 fun Block.getFriction() = when (xType()) {
     XMaterial.ICE -> 0.98
     XMaterial.PACKED_ICE -> 0.98

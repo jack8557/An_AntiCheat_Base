@@ -16,7 +16,7 @@ internal object AntiCheatManager {
 
     lateinit var plugin: Plugin
 
-    private val tickProcessor: TickProcessor = TickProcessor()
+    val tickProcessor: TickProcessor = TickProcessor()
 
     lateinit var defaultCheckConfig: CheckConfig
 

@@ -21,8 +21,9 @@ class TickProcessor : Runnable {
         ticks++
         UserManager.users.parallelStream().forEach {
             val target = it.actionManager.target
-            val aabb = target.getAABB()
-            if (aabb != null) it.targetLocations.add(Pair(aabb, ticks))
+            it.targetLocations.add(Pair(target.location, ticks))
+            val boundingBox = target.getAABB()?: return@forEach
+            it.targetBoundingBoxes.add(Pair(boundingBox, ticks))
         }
     }
 

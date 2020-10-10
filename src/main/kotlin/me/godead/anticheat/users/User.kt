@@ -6,15 +6,19 @@ import io.github.retrooper.packetevents.event.impl.PacketReceiveEvent
 import io.github.retrooper.packetevents.event.impl.PacketSendEvent
 import me.godead.anticheat.check.Check
 import me.godead.anticheat.check.CheckManager
+import me.godead.anticheat.plugin.AntiCheatManager
 import me.godead.anticheat.users.impl.ActionManager
 import me.godead.anticheat.users.impl.CollisionManager
 import me.godead.anticheat.users.impl.PositionManager
 import me.godead.anticheat.utils.EvictingList
 import org.bukkit.Bukkit
+import org.bukkit.Location
 import org.bukkit.entity.Player
 import java.util.*
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
+import kotlin.math.abs
+import kotlin.math.floor
 
 open class User(uuid: UUID) {
 
@@ -26,7 +30,9 @@ open class User(uuid: UUID) {
 
     private val executorService: ExecutorService = Executors.newSingleThreadExecutor()
 
-    var targetLocations: EvictingList<Pair<BoundingBox, Int>> = EvictingList(30)
+    var targetLocations: EvictingList<Pair<Location, Int>> = EvictingList(30)
+
+    var targetBoundingBoxes: EvictingList<Pair<BoundingBox, Int>> = EvictingList(30)
 
     val clientVersion: ClientVersion = PacketEvents.getAPI().playerUtils.getClientVersion(player)
 
@@ -37,6 +43,14 @@ open class User(uuid: UUID) {
     val positionManager = PositionManager(this)
 
     val collisionManager = CollisionManager(this)
+
+    val accurateTargetLocation get() = targetLocations.stream().filter { (_, second) ->
+        abs(AntiCheatManager.tickProcessor.ticks - second - floor(ping / 50.0).toInt()) < 2
+    }.findAny().get()
+
+    val accurateTargetBoundingBox get() = targetBoundingBoxes.stream().filter { (_, second) ->
+        abs(AntiCheatManager.tickProcessor.ticks - second - floor(ping / 50.0).toInt()) < 2
+    }.findAny().get()
 
     fun inbound(event: PacketReceiveEvent) {
         executorService.execute {

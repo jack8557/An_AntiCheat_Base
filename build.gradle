@@ -21,7 +21,7 @@ dependencies {
 
     compileOnly 'org.spigotmc:spigot-api:1.16.1-R0.1-SNAPSHOT'
 
-    compileOnly 'com.github.retrooper:packetevents:1.6.9'
+    compileOnly 'com.github.retrooper:packetevents:1.7-PRE-2'
     implementation 'com.github.godead:lilliputian:0.1.13'
 
 

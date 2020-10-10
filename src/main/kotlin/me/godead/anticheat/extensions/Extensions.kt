@@ -3,11 +3,11 @@
 package me.godead.anticheat.extensions
 
 import io.github.retrooper.packetevents.PacketEvents
-import io.github.retrooper.packetevents.enums.ServerVersion
 import io.github.retrooper.packetevents.event.PacketListener
 import io.github.retrooper.packetevents.event.impl.PacketReceiveEvent
 import io.github.retrooper.packetevents.packettype.PacketType
 import io.github.retrooper.packetevents.packetwrappers.`in`.useentity.WrappedPacketInUseEntity
+import io.github.retrooper.packetevents.utils.server.ServerVersion
 import me.godead.anticheat.check.Check
 import me.godead.anticheat.check.CheckManager
 import me.godead.anticheat.plugin.AntiCheatManager

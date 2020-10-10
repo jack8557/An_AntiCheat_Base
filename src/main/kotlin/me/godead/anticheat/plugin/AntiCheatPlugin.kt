@@ -24,7 +24,7 @@ open class AntiCheatPlugin : JavaPlugin() {
                     Repository.JITPACK,
                     "com.github.retrooper",
                     "packetevents",
-                    "1.6.9"
+                    "1.7-PRE-2"
                 )
             )
             .addDependency(

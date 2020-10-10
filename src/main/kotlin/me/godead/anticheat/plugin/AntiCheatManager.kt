@@ -25,7 +25,6 @@ internal object AntiCheatManager {
     fun init(plugin: Plugin) {
         this.plugin = plugin
         PacketEvents.load()
-        PacketEvents.getSettings().identifier = plugin.javaClass.name
         PacketEvents.init(plugin)
 
         settingsConfig = SettingsConfig()

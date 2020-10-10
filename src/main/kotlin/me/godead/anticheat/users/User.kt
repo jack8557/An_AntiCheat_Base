@@ -1,9 +1,9 @@
 package me.godead.anticheat.users
 
 import io.github.retrooper.packetevents.PacketEvents
-import io.github.retrooper.packetevents.enums.ClientVersion
 import io.github.retrooper.packetevents.event.impl.PacketReceiveEvent
 import io.github.retrooper.packetevents.event.impl.PacketSendEvent
+import io.github.retrooper.packetevents.utils.player.ClientVersion
 import me.godead.anticheat.check.Check
 import me.godead.anticheat.check.CheckManager
 import me.godead.anticheat.plugin.AntiCheatManager

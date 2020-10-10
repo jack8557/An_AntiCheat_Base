@@ -44,15 +44,21 @@ open class User(uuid: UUID) {
 
     val collisionManager = CollisionManager(this)
 
-    val accurateTargetLocation get() = targetLocations.stream().filter { (_, second) ->
-        abs(AntiCheatManager.tickProcessor.ticks - second - floor(ping / 50.0).toInt()) < 2
-    }.findAny().get()
+    var joinTicks = 0
 
-    val accurateTargetBoundingBox get() = targetBoundingBoxes.stream().filter { (_, second) ->
-        abs(AntiCheatManager.tickProcessor.ticks - second - floor(ping / 50.0).toInt()) < 2
-    }.findAny().get()
+    val ticks get() = AntiCheatManager.tickProcessor.ticks - joinTicks
 
-    fun inbound(event: PacketReceiveEvent) {
+    val accurateTargetLocation
+        get() = targetLocations.stream().filter { (_, second) ->
+            abs(AntiCheatManager.tickProcessor.ticks - second - floor(ping / 50.0).toInt()) < 2
+        }.findAny().get()
+
+    val accurateTargetBoundingBox
+        get() = targetBoundingBoxes.stream().filter { (_, second) ->
+            abs(AntiCheatManager.tickProcessor.ticks - second - floor(ping / 50.0).toInt()) < 2
+        }.findAny().get()
+
+    fun inbound(event: PacketReceiveEvent) =
         executorService.execute {
             checks.stream().forEach { check: Check ->
                 UserManager.getUser(event.player.uniqueId)?.let {
@@ -63,9 +69,9 @@ open class User(uuid: UUID) {
                 }
             }
         }
-    }
 
-    fun outbound(event: PacketSendEvent) {
+
+    fun outbound(event: PacketSendEvent) =
         executorService.execute {
             checks.stream().forEach { check: Check ->
                 UserManager.getUser(event.player.uniqueId)?.let {
@@ -76,5 +82,4 @@ open class User(uuid: UUID) {
                 }
             }
         }
-    }
 }

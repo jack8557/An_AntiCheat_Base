@@ -1,4 +1,5 @@
 @file:JvmName(name = "Extensions")
+
 package me.godead.anticheat.extensions
 
 import io.github.retrooper.packetevents.PacketEvents
@@ -26,8 +27,10 @@ import org.bukkit.potion.PotionEffectType
 
 fun Player.getUser() = UserManager.getUser(uniqueId)
 
-fun Player.register() =
+fun Player.register() {
     UserManager.register(AntiCheatManager.customUser?.constructors?.first()?.newInstance(uniqueId) as User)
+    getUser()?.joinTicks = AntiCheatManager.tickProcessor.ticks
+}
 
 fun Player.unregister() = getUser()?.let { UserManager.unregister(it) }
 
@@ -53,12 +56,12 @@ fun Any.debug() = Bukkit.broadcastMessage(toString().color())
 fun Block.xType(): XMaterial {
     val valueBefore: String = this.toString().substringAfter("type=")
     val valuePre: String = valueBefore.substringBefore(",data")
-    val value: String = valuePre.toUpperCase().replace(' ','_')
+    val value: String = valuePre.toUpperCase().replace(' ', '_')
 
     return try {
         XMaterial.valueOf(value)
     } catch (ex: java.lang.IllegalArgumentException) {
-        XMaterial.requestOldXMaterial(value,-1)!!
+        XMaterial.requestOldXMaterial(value, -1)!!
     }
 }
 
@@ -78,21 +81,29 @@ fun PacketReceiveEvent.isAttack() =
     else WrappedPacketInUseEntity(this.nmsPacket).action == WrappedPacketInUseEntity.EntityUseAction.ATTACK
 
 
-fun User.isGliding() = if (PacketEvents.getAPI().serverUtils.version.isHigherThan(ServerVersion.v_1_8_8)) this.player.isGliding else false
+fun User.isGliding() =
+    if (PacketEvents.getAPI().serverUtils.version.isHigherThan(ServerVersion.v_1_8_8)) this.player.isGliding else false
 
-fun Player.hasLevitation() = if (PacketEvents.getAPI().serverUtils.version.isLowerThan(ServerVersion.v_1_9)) false else this.hasPotionEffect(PotionEffectType.LEVITATION)
+fun Player.hasLevitation() =
+    if (PacketEvents.getAPI().serverUtils.version.isLowerThan(ServerVersion.v_1_9)) false else this.hasPotionEffect(
+        PotionEffectType.LEVITATION
+    )
 
 
-fun Player.getPotionLevel(effect: PotionEffectType) = if (!this.hasPotionEffect(effect)) 0 else this.activePotionEffects.stream().filter { potionEffect: PotionEffect -> potionEffect.type.id == effect.id }.map { obj: PotionEffect -> obj.amplifier }.findAny().orElse(0) + 1
+fun Player.getPotionLevel(effect: PotionEffectType) =
+    if (!this.hasPotionEffect(effect)) 0 else this.activePotionEffects.stream()
+        .filter { potionEffect: PotionEffect -> potionEffect.type.id == effect.id }
+        .map { obj: PotionEffect -> obj.amplifier }.findAny().orElse(0) + 1
 
 
-fun String.color() = ChatColor.translateAlternateColorCodes('&',this)
+fun String.color() = ChatColor.translateAlternateColorCodes('&', this)
 
 
 fun Entity.getAABB() = BoundingBoxUtils.getEntityBoundingBox(this as LivingEntity)
 
 
 object BoundingBoxUtils {
-    fun getEntityBoundingBox(entity: LivingEntity) = ReflectionsUtil.getBoundingBox(entity)?.let { ReflectionsUtil.toBoundingBox(it) }
+    fun getEntityBoundingBox(entity: LivingEntity) =
+        ReflectionsUtil.getBoundingBox(entity)?.let { ReflectionsUtil.toBoundingBox(it) }
 
 }

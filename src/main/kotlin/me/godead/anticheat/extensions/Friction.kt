@@ -13,6 +13,7 @@ fun Block.getFriction() = when (xType()) {
     else -> 0.6
 }
 
+/*
 fun Block.isSolid() = xType().isSolid()
 
 fun XMaterial.isSolid() = when {
@@ -64,3 +65,4 @@ fun XMaterial.isSolid() = when {
     this.name.contains("BANNER", true) -> false
     else -> true
 }
+*/

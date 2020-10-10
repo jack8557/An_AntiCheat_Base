@@ -28,15 +28,6 @@ class CollisionManager(val user: User) {
         user.player.world
     ) { XMaterial: XMaterial -> XMaterial == material }
 
-    fun touchingAnySolid() = user.positionManager.boundingBox.checkBlocksAny(
-        user.player.world
-    ) { XMaterial: XMaterial -> XMaterial.isSolid() }
-
-    fun touchingAllSolid() = user.positionManager.boundingBox.checkBlocks(
-        user.player.world
-    ) { XMaterial: XMaterial -> XMaterial.isSolid() }
-
-
     fun touchingAll(material: XMaterial) = user.positionManager.boundingBox.checkBlocks(
         user.player.world
     ) { XMaterial: XMaterial -> XMaterial == material }

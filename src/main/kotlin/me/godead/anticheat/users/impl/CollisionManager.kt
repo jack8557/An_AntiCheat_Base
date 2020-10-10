@@ -6,11 +6,21 @@ import me.godead.anticheat.utils.XMaterial
 
 class CollisionManager(val user: User) {
 
-    val isAgainstWall get() = (user.collisionManager.touchingAll(BoundingBox(
-        user.player.location.clone().add(0.0, 0.5, 0.0)
-    ).expand(0.5, 0.0, 0.5), XMaterial.AIR) || user.collisionManager.touchingAll(BoundingBox(
-        user.player.location.clone().add(0.0, 1.5, 0.0)
-    ).expand(0.5, 0.0, 0.5), XMaterial.AIR))
+    val isAgainstWall
+        get() =
+            !user.collisionManager.touchingAll(
+                BoundingBox(
+                    user.player.location.clone()
+                        .add(0.0, 0.5, 0.0)
+                )
+                    .expand(0.5, 0.0, 0.5), XMaterial.AIR
+            ) ||
+                    !user.collisionManager.touchingAll(
+                        BoundingBox(
+                            user.player.location.clone()
+                                .add(0.0, 1.5, 0.0)
+                        ).expand(0.5, 0.0, 0.5), XMaterial.AIR
+                    )
 
     fun touchingAny(material: XMaterial) = user.positionManager.boundingBox.checkBlocksAny(
         user.player.world

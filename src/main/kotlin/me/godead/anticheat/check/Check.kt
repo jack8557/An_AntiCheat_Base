@@ -2,7 +2,6 @@ package me.godead.anticheat.check
 
 import io.github.retrooper.packetevents.event.impl.PacketReceiveEvent
 import io.github.retrooper.packetevents.event.impl.PacketSendEvent
-import me.godead.anticheat.config.CheckConfig
 import me.godead.anticheat.plugin.AntiCheatManager
 import me.godead.anticheat.users.User
 

@@ -30,6 +30,7 @@ internal object AntiCheatManager {
 
         defaultCheckConfig = CheckConfig()
         defaultCheckConfig.createConfig()
+
         defaultConfig = DefaultConfig()
         defaultConfig.createConfig()
 

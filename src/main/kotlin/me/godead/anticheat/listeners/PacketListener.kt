@@ -25,6 +25,7 @@ class PacketListener : PacketListener {
     @PacketHandler
     fun handle(event: PacketReceiveEvent) {
         val user = event.player.getUser() ?: return
+        user.cancelManager.handle(event)
         when {
             event.packetId.isFlying() -> {
                 val flyPacket = WrappedPacketInFlying(event.nmsPacket)

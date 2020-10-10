@@ -8,6 +8,7 @@ import me.godead.anticheat.check.Check
 import me.godead.anticheat.check.CheckManager
 import me.godead.anticheat.plugin.AntiCheatManager
 import me.godead.anticheat.users.impl.ActionManager
+import me.godead.anticheat.users.impl.CancelManager
 import me.godead.anticheat.users.impl.CollisionManager
 import me.godead.anticheat.users.impl.PositionManager
 import me.godead.anticheat.utils.EvictingList
@@ -43,6 +44,8 @@ open class User(uuid: UUID) {
     val positionManager = PositionManager(this)
 
     val collisionManager = CollisionManager(this)
+
+    val cancelManager = CancelManager(this)
 
     var joinTicks = 0
 

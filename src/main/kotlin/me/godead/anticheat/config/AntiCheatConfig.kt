@@ -21,8 +21,7 @@ open class AntiCheatConfig(val configName: String) {
 
     fun save() = customConfig.save(customConfigFile)
 
-    
-    
+
     fun createConfig(): AntiCheatConfig {
         customConfigFile = File(AntiCheatManager.plugin.dataFolder, "$configName.yml")
         if (!customConfigFile.exists()) {
@@ -41,10 +40,13 @@ open class AntiCheatConfig(val configName: String) {
         return this
     }
 
-    fun getOrSet(path: String, value: Any): Any {
-        if (!customConfig.isSet(path)) customConfig.set(path, value); save()
-        return value
-    }
+    fun getOrSet(path: String, value: Any) =
+        if (!customConfig.isSet(path)) {
+            customConfig.set(path, value)
+            save()
+            value
+        } else customConfig.get(path)!!
+
 
     init {
         configs.add(this)

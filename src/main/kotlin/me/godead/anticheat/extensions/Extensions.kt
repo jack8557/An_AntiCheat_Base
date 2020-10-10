@@ -4,6 +4,7 @@ package me.godead.anticheat.extensions
 import io.github.retrooper.packetevents.PacketEvents
 import io.github.retrooper.packetevents.enums.ServerVersion
 import io.github.retrooper.packetevents.event.PacketListener
+import io.github.retrooper.packetevents.event.impl.PacketReceiveEvent
 import io.github.retrooper.packetevents.packettype.PacketType
 import io.github.retrooper.packetevents.packetwrappers.`in`.useentity.WrappedPacketInUseEntity
 import me.godead.anticheat.check.Check
@@ -71,10 +72,10 @@ fun XMaterial.isBouncable() = this == XMaterial.SLIME_BLOCK || this == XMaterial
 
 fun Byte.isFlying() = PacketType.Client.Util.isInstanceOfFlying(this)
 
-fun Any.isAttack(byte: Byte): Boolean {
-    if (byte != PacketType.Client.USE_ENTITY) return false
-    return WrappedPacketInUseEntity(this).action == WrappedPacketInUseEntity.EntityUseAction.ATTACK
-}
+fun PacketReceiveEvent.isAttack() =
+    if (this.packetId != PacketType.Client.USE_ENTITY) false
+    else WrappedPacketInUseEntity(this.nmsPacket).action == WrappedPacketInUseEntity.EntityUseAction.ATTACK
+
 
 fun User.isGliding() = if (PacketEvents.getAPI().serverUtils.version.isHigherThan(ServerVersion.v_1_8_8)) this.player.isGliding else false
 

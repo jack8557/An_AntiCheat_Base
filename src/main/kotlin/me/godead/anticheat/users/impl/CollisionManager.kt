@@ -1,8 +1,10 @@
 package me.godead.anticheat.users.impl
 
+import me.godead.anticheat.extensions.isSolid
 import me.godead.anticheat.users.BoundingBox
 import me.godead.anticheat.users.User
 import me.godead.anticheat.utils.XMaterial
+import java.util.function.Predicate
 
 class CollisionManager(val user: User) {
 
@@ -25,6 +27,14 @@ class CollisionManager(val user: User) {
     fun touchingAny(material: XMaterial) = user.positionManager.boundingBox.checkBlocksAny(
         user.player.world
     ) { XMaterial: XMaterial -> XMaterial == material }
+
+    fun touchingAnySolid() = user.positionManager.boundingBox.checkBlocksAny(
+        user.player.world
+    ) { XMaterial: XMaterial -> XMaterial.isSolid() }
+
+    fun touchingAllSolid() = user.positionManager.boundingBox.checkBlocks(
+        user.player.world
+    ) { XMaterial: XMaterial -> XMaterial.isSolid() }
 
 
     fun touchingAll(material: XMaterial) = user.positionManager.boundingBox.checkBlocks(

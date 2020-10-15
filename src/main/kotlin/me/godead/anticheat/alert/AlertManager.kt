@@ -1,5 +1,7 @@
 package me.godead.anticheat.alert
 
+import me.godead.anticheat.api.AnticheatFlagEvent
+import me.godead.anticheat.api.AnticheatPunishEvent
 import me.godead.anticheat.check.Check
 import me.godead.anticheat.extensions.color
 import me.godead.anticheat.plugin.AntiCheatManager
@@ -34,6 +36,18 @@ open class AlertManager {
     ) as String
 
     open fun onFlag(user: User, check: Check) {
+        val event = AnticheatFlagEvent(
+            user.player,
+            check.checkName,
+            check.checkType,
+            check.vl.toFloat(),
+            check
+        )
+        Bukkit.getScheduler()
+            .runTask(AntiCheatManager.plugin, Runnable { Bukkit.getPluginManager().callEvent(event) })
+        if (event.isCancelled) {
+            return
+        }
         UserManager.users.parallelStream()
             .filter { it.alerts }
             .filter { it.player.hasPermission(alertPermission) }
@@ -42,6 +56,17 @@ open class AlertManager {
     }
 
     open fun onPunish(user: User, check: Check) {
+        val event = AnticheatPunishEvent(
+            user.player,
+            check.checkName,
+            check.checkType,
+            check.vl.toFloat()
+        )
+        Bukkit.getScheduler()
+            .runTask(AntiCheatManager.plugin, Runnable { Bukkit.getPluginManager().callEvent(event) })
+        if (event.isCancelled) {
+            return
+        }
         if (!check.punishable) return
         Bukkit.getScheduler().runTask(AntiCheatManager.plugin, Runnable {
             punishCommands.forEach {

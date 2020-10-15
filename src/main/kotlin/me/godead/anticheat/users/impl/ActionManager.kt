@@ -16,6 +16,8 @@ class ActionManager(val user: User) {
 
     val teleportTicks = Ticks(-99)
 
+    val flagTicks = Ticks(-99)
+
     var target: Entity = user.player
         private set
 

@@ -102,7 +102,7 @@ public class ReflectionsUtil {
     public static BoundingBox toBoundingBox(Object aaBB) {
         Vector min = getBoxMin(aaBB);
         Vector max = getBoxMax(aaBB);
-
+        
         return new BoundingBox(min.getX(), min.getY(), min.getZ(), max.getX(), max.getY(), max.getZ());
     }
 

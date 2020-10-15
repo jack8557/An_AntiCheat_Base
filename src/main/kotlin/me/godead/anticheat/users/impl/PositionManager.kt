@@ -77,6 +77,9 @@ class PositionManager(val user: User) {
         if (!user.collisionManager.touchingAll(XMaterial.AIR))
             airTicks.setTicks(System.currentTimeMillis())
 
+        if (user.collisionManager.touchingAll(XMaterial.AIR) && user.actionManager.flagTicks.getTicks() > 200)
+            user.lastLegitLocation = user.player.location
+
 
         if (user.collisionManager.touchingAny(
                 XMaterial.LADDER,

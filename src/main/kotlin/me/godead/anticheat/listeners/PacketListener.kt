@@ -9,18 +9,15 @@ import io.github.retrooper.packetevents.packetwrappers.`in`.entityaction.Wrapped
 import io.github.retrooper.packetevents.packetwrappers.`in`.flying.WrappedPacketInFlying
 import io.github.retrooper.packetevents.packetwrappers.`in`.useentity.WrappedPacketInUseEntity
 import io.github.retrooper.packetevents.packetwrappers.out.animation.WrappedPacketOutAnimation
-import me.godead.anticheat.extensions.debug
 import me.godead.anticheat.extensions.getUser
 import me.godead.anticheat.extensions.isFlying
 import org.bukkit.Location
 
 class PacketListener : PacketListener {
 
-    @PacketHandler
-    fun receiveEvent(event: PacketReceiveEvent) = event.player.getUser()?.inbound(event)
+    @PacketHandler fun receiveEvent(event: PacketReceiveEvent) = event.player.getUser()?.inbound(event)
 
-    @PacketHandler
-    fun sendEvent(event: PacketSendEvent) = event.player.getUser()?.outbound(event)
+    @PacketHandler fun sendEvent(event: PacketSendEvent) = event.player.getUser()?.outbound(event)
 
     @PacketHandler
     fun handle(event: PacketReceiveEvent) {

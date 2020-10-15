@@ -6,6 +6,7 @@ import io.github.retrooper.packetevents.event.impl.PacketSendEvent
 import io.github.retrooper.packetevents.utils.player.ClientVersion
 import me.godead.anticheat.check.Check
 import me.godead.anticheat.check.CheckManager
+import me.godead.anticheat.lagback.LagBack
 import me.godead.anticheat.plugin.AntiCheatManager
 import me.godead.anticheat.users.impl.ActionManager
 import me.godead.anticheat.users.impl.CancelManager
@@ -31,11 +32,15 @@ open class User(uuid: UUID) {
 
     private val executorService: ExecutorService = Executors.newSingleThreadExecutor()
 
+    var lastLegitLocation: Location = player.location
+
     var targetLocations: EvictingList<Pair<Location, Int>> = EvictingList(30)
 
     var targetBoundingBoxes: EvictingList<Pair<BoundingBox, Int>> = EvictingList(30)
 
     val clientVersion: ClientVersion = PacketEvents.getAPI().playerUtils.getClientVersion(player)
+
+    val lagBack get() = LagBack.lagBack(this)
 
     val ping get() = PacketEvents.getAPI().playerUtils.getPing(player)
 

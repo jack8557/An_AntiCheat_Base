@@ -29,6 +29,7 @@ open class Check {
         if (!enabled) return
         vl++
         AntiCheatManager.alertManager!!.onFlag(user, this)
+        user.actionManager.flagTicks.setTicks(System.currentTimeMillis())
     }
 
     init {

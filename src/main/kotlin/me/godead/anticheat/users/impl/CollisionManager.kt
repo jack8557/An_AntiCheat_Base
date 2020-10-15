@@ -3,7 +3,6 @@ package me.godead.anticheat.users.impl
 import me.godead.anticheat.users.BoundingBox
 import me.godead.anticheat.users.User
 import me.godead.anticheat.utils.XMaterial
-import java.util.function.Predicate
 
 class CollisionManager(val user: User) {
 

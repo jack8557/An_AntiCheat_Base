@@ -1,6 +1,7 @@
 package me.godead.anticheat.check
 
 import me.godead.anticheat.config.AntiCheatConfig
+import me.godead.anticheat.plugin.AntiCheatManager
 import java.util.*
 import java.util.function.Consumer
 import kotlin.collections.ArrayList
@@ -39,8 +40,14 @@ object CheckManager {
                             field[check] = `val`
                         }
                     } else {
-                        config.getOrSet(field.getAnnotation(ConfigValue::class.java).path, field[check])
-                        config.save()
+                        AntiCheatManager.defaultCheckConfig.getOrSet(
+                            try {
+                                field.getAnnotation(ConfigValue::class.java).path
+                            } catch (ex: Exception) {
+                                path
+                            }, field[check]
+                        )
+                        AntiCheatManager.defaultCheckConfig.save()
                     }
                 } catch (e: IllegalAccessException) {
                     e.printStackTrace()

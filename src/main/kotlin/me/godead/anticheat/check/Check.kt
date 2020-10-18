@@ -12,6 +12,7 @@ open class Check {
 
     var enabled = false
     var punishable = false
+    var cancel = false
 
     var preVL = 0.0
 
@@ -32,9 +33,22 @@ open class Check {
         user.actionManager.flagTicks.setTicks(System.currentTimeMillis())
     }
 
+    protected fun cancel(user: User, vararg packets: Byte) {
+        if (cancel) {
+            packets.forEach { user.cancelManager.cancelNext(it) }
+        }
+    }
+
+    protected fun lagBack(user: User) {
+        if (cancel) {
+            user.lagBack
+        }
+    }
+
     init {
         enabled = AntiCheatManager.defaultCheckConfig.getOrSet("$checkConfigName.enabled", true) as Boolean
         punishable = AntiCheatManager.defaultCheckConfig.getOrSet("$checkConfigName.punishable", true) as Boolean
+        cancel = AntiCheatManager.defaultCheckConfig.getOrSet("$checkConfigName.cancel", true) as Boolean
         maxVL = AntiCheatManager.defaultCheckConfig.getOrSet("$checkConfigName.max-vl", 10) as Int
     }
 

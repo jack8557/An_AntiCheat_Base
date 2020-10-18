@@ -12,6 +12,7 @@ import me.godead.anticheat.users.User
 import org.bukkit.plugin.Plugin
 
 
+
 internal object AntiCheatManager {
 
     lateinit var plugin: Plugin

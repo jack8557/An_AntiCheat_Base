@@ -11,6 +11,7 @@ import io.github.retrooper.packetevents.utils.server.ServerVersion
 import me.godead.anticheat.check.Check
 import me.godead.anticheat.check.CheckManager
 import me.godead.anticheat.plugin.AntiCheatManager
+import me.godead.anticheat.plugin.AntiCheatPlugin
 import me.godead.anticheat.users.User
 import me.godead.anticheat.users.UserManager
 import me.godead.anticheat.utils.ReflectionsUtil
@@ -107,3 +108,5 @@ object BoundingBoxUtils {
         ReflectionsUtil.getBoundingBox(entity)?.let { ReflectionsUtil.toBoundingBox(it) }
 
 }
+
+fun AntiCheatPlugin.tickProcessor() = AntiCheatManager.tickProcessor

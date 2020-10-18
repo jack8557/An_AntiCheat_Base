@@ -31,13 +31,13 @@ object CheckManager {
                 try {
                     field.isAccessible = true
                     val path = check.checkConfigName + ".settings." + field.name
-                    val config = try {
+                    /*val config = try {
                         AntiCheatConfig.getCheckForName(field.getAnnotation(ConfigValue::class.java).configName)
                     } catch (ex: NoSuchElementException) {
                         null
-                    }
-                    if (config?.customConfig?.get(path) != null) {
-                        val `val`: Any = config.customConfig.get(path)!!
+                    }*/
+                    if (AntiCheatManager.defaultCheckConfig.customConfig.get(path) != null) {
+                        val `val`: Any = AntiCheatManager.defaultCheckConfig.customConfig.get(path)!!
                         if (`val` is Double && field[check] is Float) {
                             field[check] = `val`.toFloat()
                         } else {

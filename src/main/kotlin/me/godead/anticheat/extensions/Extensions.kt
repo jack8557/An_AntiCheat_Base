@@ -109,4 +109,4 @@ object BoundingBoxUtils {
 
 }
 
-fun AntiCheatPlugin.tickProcessor() = AntiCheatManager.tickProcessor
+public fun getTickProcessor() = AntiCheatManager.tickProcessor

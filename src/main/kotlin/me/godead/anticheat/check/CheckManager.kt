@@ -4,6 +4,7 @@ import me.godead.anticheat.config.AntiCheatConfig
 import me.godead.anticheat.plugin.AntiCheatManager
 import java.util.*
 import java.util.function.Consumer
+import kotlin.NoSuchElementException
 import kotlin.collections.ArrayList
 
 
@@ -30,9 +31,12 @@ object CheckManager {
                 try {
                     field.isAccessible = true
                     val path = check.checkConfigName + ".settings." + field.name
-                    val config =
+                    val config = try {
                         AntiCheatConfig.getCheckForName(field.getAnnotation(ConfigValue::class.java).configName)
-                    if (config.customConfig.get(path) != null) {
+                    } catch (ex: NoSuchElementException) {
+                        null
+                    }
+                    if (config?.customConfig?.get(path) != null) {
                         val `val`: Any = config.customConfig.get(path)!!
                         if (`val` is Double && field[check] is Float) {
                             field[check] = `val`.toFloat()

@@ -13,7 +13,7 @@ open class Check {
     var enabled = false
     var punishable = false
 
-    var preVL = 0
+    var preVL = 0.0
 
     var checkName: String = this.javaClass.getAnnotation(Info::class.java).name
 
@@ -37,4 +37,7 @@ open class Check {
         punishable = AntiCheatManager.defaultCheckConfig.getOrSet("$checkConfigName.punishable", true) as Boolean
         maxVL = AntiCheatManager.defaultCheckConfig.getOrSet("$checkConfigName.max-vl", 10) as Int
     }
+
+    fun Double.decrease(amount: Double, coerceAtLeast: Double = 0.0) = minus(amount).coerceAtLeast(coerceAtLeast)
+
 }

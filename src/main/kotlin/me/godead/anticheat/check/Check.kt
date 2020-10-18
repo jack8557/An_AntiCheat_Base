@@ -14,7 +14,6 @@ open class Check {
     var punishable = false
 
     var preVL = 0.0
-        get() = preVL.coerceAtLeast(0.0)
 
     var checkName: String = this.javaClass.getAnnotation(Info::class.java).name
 
@@ -39,6 +38,6 @@ open class Check {
         maxVL = AntiCheatManager.defaultCheckConfig.getOrSet("$checkConfigName.max-vl", 10) as Int
     }
 
-    fun decrease(amount: Double, coerceAtLeast: Double = 0.0) = preVL.minus(amount).coerceAtLeast(coerceAtLeast)
+    fun decreasePreVL(amount: Double, coerceAtLeast: Double = 0.0) = preVL.minus(amount).coerceAtLeast(coerceAtLeast)
 
 }

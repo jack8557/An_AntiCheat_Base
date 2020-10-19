@@ -102,6 +102,12 @@ fun String.color() = ChatColor.translateAlternateColorCodes('&', this)
 
 fun Entity.getAABB() = BoundingBoxUtils.getEntityBoundingBox(this as LivingEntity)
 
+/**
+ * Returns 1 if the condition is true
+ * or 0 if the condition is false
+ * */
+fun Boolean.toInt() = if (this) 1 else 0
+
 
 object BoundingBoxUtils {
     fun getEntityBoundingBox(entity: LivingEntity) =

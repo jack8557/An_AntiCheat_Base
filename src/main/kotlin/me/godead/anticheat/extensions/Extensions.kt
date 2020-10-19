@@ -108,5 +108,3 @@ object BoundingBoxUtils {
         ReflectionsUtil.getBoundingBox(entity)?.let { ReflectionsUtil.toBoundingBox(it) }
 
 }
-
-public fun getTickProcessor() = AntiCheatManager.tickProcessor

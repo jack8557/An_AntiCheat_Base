@@ -22,6 +22,14 @@ class CollisionManager(val user: User) {
                         ).expand(0.5, 0.0, 0.5), XMaterial.AIR
                     )
 
+    val isUnderBlock
+        get() = !user.collisionManager.touchingAll(
+            BoundingBox(
+                user.player.location.clone()
+                    .add(0.0, 2.2, 0.0)
+            ).expand(0.25, 0.0, 0.25), XMaterial.AIR
+        )
+
     fun touchingAny(material: XMaterial) = user.positionManager.boundingBox.checkBlocksAny(
         user.player.world
     ) { XMaterial: XMaterial -> XMaterial == material }

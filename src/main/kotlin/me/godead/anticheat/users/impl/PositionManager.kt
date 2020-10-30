@@ -41,7 +41,7 @@ class PositionManager(val user: User) {
 
     val lastDeltaXZ get() = hypot((lastLocation.x - getLocation(2).x), (lastLocation.z - getLocation(2).z))
 
-    val lastDeltaY get() = lastLocation.y - getLocation(2).x
+    val lastDeltaY get() = lastLocation.y - getLocation(2).y
 
     val deltaPitch get() = location.pitch - lastLocation.pitch
 
